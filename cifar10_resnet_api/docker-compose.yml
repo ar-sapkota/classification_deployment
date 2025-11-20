@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  fastapi:
+    image: arsapkota/classification_deployment_api
+    ports:
+      - "8001:8001"
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8001 --reload
+    volumes:
+      - .:/app
+    container_name: cifar10-fastapi
+
+  streamlit:
+    image: arsapkota/classification_deployment_api
+    ports:
+      - "8501:8501"
+    command: streamlit run /app/streamlit_app.py --server.port=8501 --server.enableCORS=false
+    container_name: cifar10-streamlit
